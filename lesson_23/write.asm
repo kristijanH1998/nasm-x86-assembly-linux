@@ -16,21 +16,21 @@ SECTION .text
 global	_start
 
 _start:
-	mov	ecx, 0777o
+	mov	ecx, 0777o	; code continues from lesson 22
 	mov	ebx, filename1
 	mov	eax, 8
 	int	80h
 
-	mov	edx, 12
-	mov	ecx, contents1
-	mov	ebx, eax
+	mov	edx, 12		 ; number of bytes to write - one for each letter of our contents string
+	mov	ecx, contents1	; move the memory address of our contents1 string into ecx
+	mov	ebx, eax	; move the file descriptor of the file we created into ebx
 	push	eax
 	mov	eax, msg
 	call	sprintLF
 	pop	eax
 	call	iprintLF
-	mov	eax, 4
-	int	80h
+	mov	eax, 4		; invoke SYS_WRITE (kernel opcode 4)
+	int	80h		; call the kernel
 
 	mov	ecx, 0777o
 	mov	ebx, filename2
@@ -48,5 +48,5 @@ _start:
 	mov	eax, 4
 	int	80h
 	
-	call	quit
+	call	quit		; call our quit function
 
